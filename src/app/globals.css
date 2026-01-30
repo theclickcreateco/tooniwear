@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-500: #1d96d2;
+  /* Vibrant Blue from Logo */
+  --color-primary-600: #1a88be;
+  --color-primary-700: #156da1;
+
+  --color-secondary-500: #f38a1a;
+  /* Orange from Logo */
+  --color-secondary-600: #db7c17;
+
+  --color-accent-500: #ffc107;
+  /* Yellow from Logo */
+
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-900: #111827;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #111827;
+  --primary: #1d96d2;
+  --secondary: #f38a1a;
+  --accent: #ffc107;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+@layer utilities {
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, #ffc107 0%, #f38a1a 100%);
+  }
+
+  .text-brand-gradient {
+    background: linear-gradient(135deg, #ffc107 0%, #f38a1a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
 }
