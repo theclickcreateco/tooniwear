@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 
 import JsonLd from "@/components/common/JsonLd";
+import WhatsAppWidget from "@/components/common/WhatsAppWidget";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} antialiased`}>
         <JsonLd data={organizationSchema} />
         {children}
+        <WhatsAppWidget />
       </body>
     </html>
   );

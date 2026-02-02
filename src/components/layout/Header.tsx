@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Search, ShoppingBag, User, Menu, X, ChevronDown } from "lucide-react";
 import { NAVIGATION_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,9 @@ import { useCartStore } from "@/store/useCartStore";
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [user, setUser] = useState<any>(null);
     const pathname = usePathname();
+    const router = useRouter();
     const cartItemCount = useCartStore((state) => state.totalItems());
 
     useEffect(() => {
@@ -19,8 +21,28 @@ export default function Header() {
             setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll);
+
+        // Fetch user session
+        fetch('/api/auth/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.user) setUser(data.user);
+            })
+            .catch(err => console.error("Session error:", err));
+
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [pathname]);
+
+    const handleLogout = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            setUser(null);
+            router.push('/');
+            router.refresh();
+        } catch (err) {
+            console.error("Logout error:", err);
+        }
+    };
 
     const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href));
 
@@ -92,9 +114,31 @@ export default function Header() {
                     <button className="p-2 text-neutral-600 hover:bg-neutral-50 rounded-full transition-colors hidden sm:block" aria-label="Search">
                         <Search className="w-5 h-5" />
                     </button>
-                    <Link href="/account" className="p-2 text-neutral-600 hover:bg-neutral-50 rounded-full transition-colors" aria-label="Account">
-                        <User className="w-5 h-5" />
-                    </Link>
+
+                    {/* User Account */}
+                    <div className="relative group/user">
+                        <Link href={user ? "#" : "/account/login"} className="p-2 text-neutral-600 hover:bg-neutral-50 rounded-full transition-colors flex items-center space-x-2" aria-label="Account">
+                            <User className="w-5 h-5" />
+                            {user && <span className="text-xs font-bold hidden md:block max-w-[80px] truncate">{user.fullName.split(' ')[0]}</span>}
+                        </Link>
+
+                        {user && (
+                            <div className="absolute top-full right-0 w-48 bg-white border border-neutral-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all duration-200">
+                                <div className="px-4 py-2 border-b border-neutral-50 mb-1">
+                                    <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest leading-none mb-1">Signed in as</p>
+                                    <p className="text-xs font-bold text-neutral-900 truncate">{user.email}</p>
+                                </div>
+                                <Link href="/account/orders" className="block px-4 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50">My Orders</Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="w-full text-left px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+                                >
+                                    Log Out
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
                     <Link href="/cart" className="p-2 text-neutral-600 hover:bg-neutral-50 rounded-full transition-colors relative" aria-label="Cart">
                         <ShoppingBag className="w-5 h-5" />
                         {cartItemCount > 0 && (
@@ -157,13 +201,25 @@ export default function Header() {
                     </nav>
 
                     <div className="mt-8 pt-6 border-t border-neutral-100">
-                        <Link
-                            href="/shop"
-                            className="block w-full py-3 bg-primary-600 text-white text-center rounded-xl font-semibold shadow-lg shadow-primary-500/20"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Shop All Collection
-                        </Link>
+                        {user ? (
+                            <div className="space-y-4">
+                                <p className="text-sm font-bold text-neutral-900 px-2">Hi, {user.fullName}!</p>
+                                <button
+                                    onClick={handleLogout}
+                                    className="w-full py-3 bg-neutral-100 text-neutral-600 rounded-xl font-semibold"
+                                >
+                                    Log Out
+                                </button>
+                            </div>
+                        ) : (
+                            <Link
+                                href="/account/login"
+                                className="block w-full py-3 bg-primary-600 text-white text-center rounded-xl font-semibold shadow-lg shadow-primary-500/20"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Sign In / Join
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

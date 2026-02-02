@@ -1,0 +1,76 @@
+[
+  {
+    "orderId": "CN-601173-JIJ",
+    "shippingDetails": {
+      "fullName": "Muhammad Huzaifa",
+      "email": "huzaifaamin23@gmail.com",
+      "address": "Punjab Colony, Karachi, Pakistan",
+      "city": "Karachi",
+      "phone": "+923212481412"
+    },
+    "items": [
+      {
+        "id": "1",
+        "name": "Adventure Denim Dungarees",
+        "price": 34.99,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?q=80&w=600&auto=format&fit=crop",
+        "size": "2Y"
+      },
+      {
+        "id": "4",
+        "name": "Sparkle Tulle Skirt",
+        "price": 24.99,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?q=80&w=600&auto=format&fit=crop",
+        "size": "6Y"
+      },
+      {
+        "id": "6",
+        "name": "Rainbow Knit Cardigan",
+        "price": 45.99,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1621451537084-482c73073a0f?q=80&w=600&auto=format&fit=crop",
+        "size": "4Y"
+      },
+      {
+        "id": "3",
+        "name": "Classic Striped Tee",
+        "price": 15.99,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?q=80&w=600&auto=format&fit=crop",
+        "size": "3Y"
+      }
+    ],
+    "totalPrice": 121.96,
+    "paymentMethod": "cod",
+    "customerIp": "::1",
+    "createdAt": "2026-02-02T14:46:41.173Z",
+    "status": "pending"
+  },
+  {
+    "orderId": "CN-720291-0GZ",
+    "shippingDetails": {
+      "fullName": "Muhammad Huzaifa",
+      "email": "huzaifaamin23@gmail.com",
+      "address": "Punjab Colony, Karachi, Pakistan",
+      "city": "Karachi",
+      "phone": "+923212481412"
+    },
+    "items": [
+      {
+        "id": "1",
+        "name": "Adventure Denim Dungarees",
+        "price": 34.99,
+        "quantity": 2,
+        "image": "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?q=80&w=600&auto=format&fit=crop",
+        "size": "2Y"
+      }
+    ],
+    "totalPrice": 69.98,
+    "paymentMethod": "cod",
+    "customerIp": "::1",
+    "createdAt": "2026-02-02T14:48:40.292Z",
+    "status": "pending"
+  }
+]
